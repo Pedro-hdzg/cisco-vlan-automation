@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Automatización Switch Cisco</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; }
+        input { padding: 8px; width: 100%; box-sizing: border-box; }
+        .vlan-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .alert { background: #ffdddd; border-left: 6px solid #f44336; padding: 10px; margin-top: 20px; }
+        .success { background: #ddffdd; border-left: 6px solid #4CAF50; padding: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Configurador de Switch Cisco</h2>
+    <form method="POST">
+        <h3>Conexión SSH</h3>
+        <div class="form-group"><label>IP del Switch:</label><input type="text" name="ip_switch" required placeholder="192.168.1.10"></div>
+        <div class="form-group"><label>Usuario:</label><input type="text" name="username" required value="admin"></div>
+        <div class="form-group"><label>Contraseña:</label><input type="password" name="password" required></div>
+        <div class="form-group"><label>Enable Secret:</label><input type="password" name="secret" required></div>
+
+        <h3>Configuración General</h3>
+        <div class="form-group"><label>Hostname:</label><input type="text" name="hostname" value="SWITCH_AUTOMATIZADO" required></div>
+
+        <h3>VLANs a Configurar</h3>
+        <div class="vlan-row">
+            <input type="text" name="vlan1_id" value="10" placeholder="ID">
+            <input type="text" name="vlan1_name" value="VLAN_DATOS" placeholder="Nombre">
+        </div>
+        <div class="vlan-row">
+            <input type="text" name="vlan2_id" value="20" placeholder="ID">
+            <input type="text" name="vlan2_name" value="VLAN_VOZ" placeholder="Nombre">
+        </div>
+        <div class="vlan-row">
+            <input type="text" name="vlan3_id" value="50" placeholder="ID">
+            <input type="text" name="vlan3_name" value="VLAN_SEGURIDAD" placeholder="Nombre">
+        </div>
+
+        <button type="submit" style="padding: 10px 20px; cursor: pointer;">Aplicar y Validar</button>
+    </form>
+
+    {% if resultado %}
+        <div class="{{ 'success' if resultado.status == 'success' and not resultado.alertas else 'alert' }}">
+            <h4>Resultados de Ejecución:</h4>
+            <ul>
+                {% for msg in resultado.mensajes %}<li>{{ msg }}</li>{% endfor %}
+            </ul>
+            {% if resultado.alertas %}
+                <h4>⚠️ Alertas de Validación:</h4>
+                <ul>
+                    {% for alerta in resultado.alertas %}<li><strong>{{ alerta }}</strong></li>{% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
