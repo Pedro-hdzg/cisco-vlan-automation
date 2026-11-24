@@ -1,4 +1,4 @@
-# Automatización de Switch Cisco con Python, Flask y Netmiko
+# Parte 1: Automatización de Switch Cisco con Python, Flask y Netmiko
 
 Aplicación web desarrollada en Python utilizando **Flask** (frontend) y **Netmiko** (automatización SSH) para configurar VLANs, modificar el hostname, guardar la configuración en NVRAM, generar respaldos locales y validar desviaciones de configuración en switches Cisco IOS.
 
@@ -15,7 +15,7 @@ Aplicación web desarrollada en Python utilizando **Flask** (frontend) y **Netmi
 ## Instalación y Ejecución
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com
+   git clone https://github.com/Pedro-hdzg/cisco-vlan-automation.gi
    cd cisco-vlan-automation
    ```
 2. Crear y activar el entorno virtual:
@@ -52,3 +52,15 @@ Aplicación web desarrollada en Python utilizando **Flask** (frontend) y **Netmi
 
 ### 3. Validación Post-Configuración y Alerta por Desviación
 ![Alerta Desviacion](docs/images/alerta.png)
+
+
+---
+
+## Parte 2: Planificación de Automatización VPN IPSec (FortiGate <-> Palo Alto)
+
+Dentro del directorio [`vpn-ipsec-plan/`](vpn-ipsec-plan/) se encuentra la arquitectura y planificación completa para el despliegue automatizado de un túnel IPSec multi-fabricante:
+
+- **[Plan Detallado de Automatización](vpn-ipsec-plan/PLAN_AUTOMATIZACION_VPN_IPSEC.md):** Definición de parámetros (`169.255.1.0/30`, IKEv2, AES-256/SHA-256), comparación de APIs (FortiOS REST API vs. PAN-OS XML API), flujo lógico de ejecución, desafíos multi-fabricante y estrategia de alertas.
+- **[Ejemplo de Automatización FortiGate](vpn-ipsec-plan/fortigate_vpn_config.py):** Script conceptual utilizando FortiOS REST API.
+- **[Ejemplo de Automatización Palo Alto](vpn-ipsec-plan/paloalto_vpn_config.py):** Script conceptual utilizando PAN-OS XML API con manejo de *commit* asíncrono.
+- **[Script de Validación y Alertas](vpn-ipsec-plan/test_vpn_connectivity.py):** Verificación de estado de túneles y pruebas de conectividad con notificación por Webhook.
